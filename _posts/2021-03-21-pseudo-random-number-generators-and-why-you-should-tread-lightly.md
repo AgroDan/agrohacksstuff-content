@@ -75,7 +75,7 @@ Let's put a pin in that. First, I want to talk about MT19937, or the Mersenne Tw
 
 ## The Mersenne Twister
 
-I won't go into the whole idea about what the Mersenne Twister is and how it came to be. You can look that up on [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister). Just understand that it was created by two Japanese math geniuses back in 1997 as a means of fixing the flaws of older PRNGs, and that it's actually *really good*. So good that many, many, MANY software systems have adopted it as the de facto PRNG formula. What makes it so good? Well, it wasn't patented, and it's premissively-licensed, so anyone can use it for free! Plus it has a period of `(2**19937)-1`, which is just a gigantic number. It's so big it absolutely dwarfs the scientific estimate of atoms in the *known universe.* Seriously, go into a python prompt and type `10**82` and then `(2**19937)-1` and see how much bigger the period is. It's tremendous.
+I won't go into the whole idea about what the Mersenne Twister is and how it came to be. You can look that up on [Wikipedia](https://en.wikipedia.org/wiki/Mersenne_Twister). Just understand that it was created by two Japanese math geniuses back in 1997 as a means of fixing the flaws of older PRNGs, and that it's actually *really good*. So good that many, many, MANY software systems have adopted it as the de facto PRNG formula. What makes it so good? Well, it wasn't patented, and it's permissively-licensed, so anyone can use it for free! Plus it has a period of `(2**19937)-1`, which is just a gigantic number. It's so big it absolutely dwarfs the scientific estimate of atoms in the *known universe.* Seriously, go into a python prompt and type `10**82` and then `(2**19937)-1` and see how much bigger the period is. It's tremendous.
 
 Anyway, here is my implementation of the MT19937 function, written in python! This was based on the pseudocode posted on wikipedia:
 
@@ -218,9 +218,9 @@ Definitely not. Because if it did, you could simply use the number it last gener
 
 What happens when you execute the Mersenne Twister? Well, first when you initialize it, you must initialize it with a seed. Then what happens?
 
-1) It builds an array of size 624, for the sake of simplicity I will call it MT.
-2) It sets MT[0] to the seed you provided.
-3) For every index after MT[0], it:
+1. It builds an array of size 624, for the sake of simplicity I will call it MT.
+2. It sets MT[0] to the seed you provided.
+3. For every index after MT[0], it:
   - Right-shifts `MT[i-1]` with the constant `30`
   - XORs the result with `MT[i-1]`
   - Multiplies the result with the constant `1812433253`
