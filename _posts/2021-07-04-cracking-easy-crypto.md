@@ -64,7 +64,7 @@ There might be some mathematical way to reverse the output, but I don't know it 
 
 The first thing I'm going to do is write the ciphertext to a file for easier use. I created `msg.enc` and added the hex string there. My goal here is to try and find out *what kind of data I'm working with*. There is a neat algorithm called the [Shannon Diversity Index](https://en.wikipedia.org/wiki/Diversity_index) which determines the entropy of the specified data to build a histogram of the bytes included and give a representation of what kind of data we're looking at here, even if it's supposedly "encrypted." While this is definitely encrypted, it does have a pretty nasty weakness: If you encrypt the same byte over and over again, it will spit out the exact same ciphertext without any difference:
 
-![Repeated Ciphertext](/img/easycrypto/repeated.png#center)
+![Repeated Ciphertext](/assets/img/easycrypto/repeated.png#center)
 
 So basically what we're dealing with is in essence a substitution cipher! Every character in UTF-8 can be represented by another byte. Now there may be a little bit of overlap where two bytes may translate to the same byte, but it hopefully doesn't happen that often. Regardless, I can run this ciphertext through the Entropy function in Cyberchef to get a feel for what we're working with (and confirm my suspicion):
 
