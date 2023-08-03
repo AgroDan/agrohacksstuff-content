@@ -23,13 +23,15 @@ After you've made up your mind and decided to install cowrie someplace safe (min
 First, let's prep the OS. After booting into a fresh Debian build...
 
 ```sh
-apt-get update && apt-get install -y git python3-virtualenv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind virtualenv vim openssh-server python3.11-venv jq
+apt-get update && apt-get install -y git python3-virtualenv libssl-dev libffi-dev \
+build-essential libpython3-dev python3-minimal authbind virtualenv vim openssh-server python3.11-venv jq
 ```
 
 Once that's done and all the dependencies are installed, let's create a cowrie user.
 
 ```sh
-# This creates a new user with a home directory and no password, without prompting for name, phone, etc.
+# This creates a new user with a home directory and no password,
+# without prompting for name, phone, etc.
 adduser --disabled-password --gecos "" cowrie
 ```
 
@@ -54,7 +56,8 @@ Now for the good stuff. I'll set up cowrie.
 I'll do this as root and drop privileges later. This will save me the hastle of having to juggle user accounts when messing with `authbind`.
 
 ```sh
-# I'll set up cowrie in /opt, but change this to wherever. Doesn't really matter. Not in root's home dir though. C'mon now.
+# I'll set up cowrie in /opt, but change this to wherever.
+# Doesn't really matter. Not in root's home dir though. C'mon now.
 pushd /opt
 
 git clone http://github.com/cowrie/cowrie
@@ -184,8 +187,8 @@ Now let's offer a similar "Thanks for logging in, just remember you're being wat
 cat > /opt/cowrie/honeyfs/etc/motd <<EOF
 ATTENTION: THIS SYSTEM IS MONITORED.
 
-Thank you for logging in. Please remember that all actions are recorded for security purposes.
-Report any suspicious behavior to the administrator.
+Thank you for logging in. Please remember that all actions are recorded
+for security purposes. Report any suspicious behavior to the administrator.
 
 EOF
 ```
