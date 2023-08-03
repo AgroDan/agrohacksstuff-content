@@ -14,7 +14,7 @@ I initially bought this site to host my [2020 Holiday Hack Challenge Writeup](ht
 
 ## Why "Agr0"?
 
-This comes from my nickname of mine, "Angry Dan." My gamer tag is Agro_dan. I just shortened it to Agro, and since Agro is taken in most places I just stylized it and made the last "o" a zero. Besides, shouldn't all hackers have a cool handle?
+This comes from a nickname of mine, "Angry Dan." My gamer tag is Agro_dan. I just shortened it to Agro, and since Agro is taken in most places I just stylized it and made the last "o" a zero. Besides, shouldn't all hackers have a cool handle?
 
 Also, a side note...I think I'm a pretty nice guy. I don't have a quick temper and I'm certainly not mean. I'm just cursed with a face that always looks angry. It's nothing personal I promise.
 
