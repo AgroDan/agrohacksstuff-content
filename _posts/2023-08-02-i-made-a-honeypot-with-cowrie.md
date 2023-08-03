@@ -122,9 +122,9 @@ The thing to understand about cowrie is that you can basically change every aspe
 
 Cowrie's "file system" is actually not a file system, but rather consists of three parts:
 
-1) A python serialized object called a pickle file, which is located in `/opt/cowrie/share/cowrie/fs.pickle`. This file contains the entire OS contents of the instance the bad actor would enter. The entire directory structure appears in this file. You can't open this file in a standard text editor because it contains numerous unprintable characters. I'll explain how to edit this later.
-2) A list of files that contain some sort of data to read when the bad actor runs `cat` on it or something similar. These files are in `/opt/cowrie/honeyfs`. Anything you put in this file **as well as the fs.pickle file** will output that data whenever someone tries to read that specific file. There's a whole process to this so you can't just dump a file in there and expect it to be visible from the cowrie shell. Again, I'll explain how to do this later.
-3) A list of files that contain mimic binary data. Any file in the `/opt/cowrie/share/cowrie/txtcmds` directory will output whatever text you enter in these files if the attacker simply runs these commands. Again, you do need to do a bit more than just add the file in this directory, so more on that later.
+1. A python serialized object called a pickle file, which is located in `/opt/cowrie/share/cowrie/fs.pickle`. This file contains the entire OS contents of the instance the bad actor would enter. The entire directory structure appears in this file. You can't open this file in a standard text editor because it contains numerous unprintable characters. I'll explain how to edit this later.
+2. A list of files that contain some sort of data to read when the bad actor runs `cat` on it or something similar. These files are in `/opt/cowrie/honeyfs`. Anything you put in this file **as well as the fs.pickle file** will output that data whenever someone tries to read that specific file. There's a whole process to this so you can't just dump a file in there and expect it to be visible from the cowrie shell. Again, I'll explain how to do this later.
+3. A list of files that contain mimic binary data. Any file in the `/opt/cowrie/share/cowrie/txtcmds` directory will output whatever text you enter in these files if the attacker simply runs these commands. Again, you do need to do a bit more than just add the file in this directory, so more on that later.
 
 #### The Username System
 
