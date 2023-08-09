@@ -73,7 +73,7 @@ _Shannon Distribution Index_
 
 And for the sake of being thorough, I can do the same thing using the `ent` command...
 
-```text
+```terminal
 ╭─agr0@agr0hacksstuff ~/Documents/easycrypto 
 ╰─$ cat msg.enc | xxd -r -p | ent
 Entropy = 3.993970 bits per byte.

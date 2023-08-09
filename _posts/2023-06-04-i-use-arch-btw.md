@@ -38,7 +38,7 @@ Now, for the disk setup.
 
 Perhaps this is somewhat controversial, but my basic disk structure is generally as simple as possible. Unless this particular machine I'm building has a specific use that requires some sort of...well, _old school_ methods of giving `/var` and `/usr` its own partition so they don't blow up the system if they run out of space, I think it's best to have everything on `/`, with `/boot` having its own partition. Sure some people want `/home` to have its own partition, and I totally get that. Easy to just move the `/home` directory from one machine to another, or just blow away everything in `/` and maintain `/home` so you can effectively reformat the entire OS and not have to deal with backing up the user's home directory, but in my opinion that's just...too much work. I'm lazy. And frankly I just don't care enough about that if this is a virtual machine. I may think differently on bare-metal hardware, but for the sake of simplicity this is my intended partition layout:
 
-```text
+```terminal
 Disk /dev/sda: 100 GiB, 107374182400 bytes, 209715200 sectors
 Disk model: VMware Virtual S
 Units: sectors of 1 * 512 = 512 bytes

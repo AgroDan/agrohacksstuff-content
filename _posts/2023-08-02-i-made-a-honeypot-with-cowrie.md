@@ -29,7 +29,7 @@ build-essential libpython3-dev python3-minimal authbind virtualenv vim openssh-s
 
 Once that's done and all the dependencies are installed, let's create a cowrie user.
 
-```sh
+```sh 
 # This creates a new user with a home directory and no password,
 # without prompting for name, phone, etc.
 adduser --disabled-password --gecos "" cowrie
@@ -206,7 +206,7 @@ pushd /opt/cowrie/honeyfs/home/admin/
 
 Now let's generate the keypair:
 
-```sh
+```terminal
 cowrie@honeypot:/opt/cowrie/honeyfs/home/admin$ ssh-keygen -f id_rsa
 Generating public/private rsa key pair.
 Enter passphrase (empty for no passphrase):
@@ -237,7 +237,7 @@ No password. Not needed. Just want to create something that's juicy. Now the way
 
 This opens a command prompt that acts similar to a bash shell, just seriously watered down:
 
-```sh
+```terminal
 Kippo/Cowrie file system interactive editor
 Donovan Hubbard, Douglas Hubbard, March 2013
 Type 'help' for help
@@ -272,7 +272,7 @@ fs.pickle:/home$
 
 From here we can make new directories with `mkdir` and create new files with `touch`. For this, I'm going to simply change the `/home/phil` directory to `/home/admin`:
 
-```sh
+```terminal
 fs.pickle:/home$ mv phil admin
 File moved from /home/phil to /home/admin
 fs.pickle:/home$ ls
@@ -281,7 +281,7 @@ admin/
 
 Now I'll just `cd` into the admin directory and create the two new files. Remember these won't actually create the files, but rather let them appear on the file system. Since we already created the files in the `honeyfs/` directory with content, this will now officially let them show up when an attacker runs `ls` on the `/home/admin/` directory:
 
-```sh
+```terminal
 fs.pickle:/home$ cd admin
 fs.pickle:/home/admin$ touch id_rsa
 Added '/home/admin/id_rsa'
@@ -303,7 +303,7 @@ First, enter the `fsctl` prompt:
 
 I'll `cd` into the `/usr/local/sbin/` directory and simply `touch` the file:
 
-```sh
+```terminal
 fs.pickle:/$ cd /usr/local/sbin
 fs.pickle:/usr/local/sbin$ ls
 fs.pickle:/usr/local/sbin$ touch checksrv

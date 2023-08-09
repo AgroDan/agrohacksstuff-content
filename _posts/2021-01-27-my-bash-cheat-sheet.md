@@ -39,7 +39,7 @@ You can do a fairly quick command substitution of the previous command with cara
 
 So for example, see how I can recover from a misspelled `cd` command:
 
-```
+```terminal
 agr0@ubuntu:~$ cd /usr/local/din/
 bash: cd: /usr/local/din/: No such file or directory
 agr0@ubuntu:~$ ^din^bin
@@ -55,7 +55,7 @@ Sometimes when you mess up your previous command, you simply forgot to add a fla
 
 This can come in handy if you, like most people, forget to prepend `sudo` to a command before you run it, as I do maybe 95% of the time:
 
-```text
+```terminal
 agr0@ubuntu:~$ apt update
 Reading package lists... Done
 E: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
@@ -73,11 +73,11 @@ I've seen people alias the word "gah" to `sudo !!`. I've also seen some more vul
 
 Similarly, the `!` prefix is a link to your command history. If you type a `!` and then another letter or few letters, like say "cu", it will search back through your command history and find the most recent command that starts with the letters "cu" that it finds. So if you have that really giant curl command that you don't want to type out again but you know that was the last curl command you ran, you can do something like this:
 
-```text
+```terminal
 agr0@ubuntu:~$ !cu<enter>
 curl -k -XPOST -d "user=admin&password=12345" http://127.0.0.1:5000
 ```
 
 ---
 
-That's most of the easy ones. There are so many neat things that bash can do that I feel like I'm only scratching the surface. I will make another post about some more advanced uses of bash that I frequently use (or need some means of referring back to) in the near future.
+That's most of the easy ones. There are so many neat things that bash can do that I feel like I'm only scratching the surface. I will make another post about some more advanced uses of bash that I frequently use (or need some means of referring back to) in the near future. 
