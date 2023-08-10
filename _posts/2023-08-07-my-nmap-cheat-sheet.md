@@ -21,8 +21,6 @@ Regardless, a default _privileged_ scan will send SYN packets and record which o
 ```terminal
 $ sudo nmap -sC -sV -oN portscan -v 10.20.30.40
 ```
-
-
 The above will scan the target (on TCP only) on the default "nmap's most popular 1000 ports". It will attempt to communicate with each open port and obtain the version of the software listening on it (`-sV`). If it successfully connects to a port and determines the running service, it will attempt to run default scripts against it (`-sC`), which will do some basic enumeration on it. Say if it were to connect to a web server on port `:80`, it will then run simple things like `GET / HTTP/1.1\r\n` and return the title of the page. It will then record all output to a file named `portscan` in the "nmap" format (`-oN portscan`), and finally it will be verbose (`-v`). Running this in verbose will inform you the second it finds an open port, so you can attempt your own enumeration on the port before nmap can finish. This is useful if you are in a rush or something I guess. I should note that Ippsec generally uses `-oA <name of server>` instead of the above, but it's generally not necessary on a challenge on HackTheBox or something. Fairly useful on in-the-wild engagements though I suppose.
 
 Finally, I want to stress the concept of running nmap as root. The `sudo` command is necessary since nmap utilizes packet capture capabilities when performing scans, which is something only root can do. Sure the nmap binary will still work, but without the ability to perform a SYN scan it will default to a TCP scan, which does not do any packet capturing but rather initiates a TCP connection to each port and attempting to negotiate with it on an application level. This capability restricts nmap's ability to detect (as I have certainly witnessed before), so SYN scans are generally considered the best option, especially according to nmap's documentation.
@@ -35,6 +33,7 @@ $ sudo nmap -p- -oN allports -v 10.20.30.40
 In this scan, I typically run this after the Ippsec Special command. This will check for all open TCP ports ranging from 0-65535. The `-p-` is shorthand for the equivalent `-p 0-65535`. Also note that I save this to a file called `allports`.
 
 ### Scan specific TCP ports
+
 ```terminal
 $ sudo nmap -sC -sV -p 22,25,80,443,5900-5999 -oN portscan 10.20.30.40
 ```
@@ -73,7 +72,7 @@ This will scan the target with "extreme aggression." Also sets retransmissions t
 ```terminal
 $ sudo nmap -sn 10.20.30.0/24
 ```
-This will perform an ICMP ECHO to all hosts on the 10.20.30.0/24 subnet. It is not uncommon for hosts to block ICMP, so this may not be the definitive way to determine if a host is actually there. On many networks it's also possible to block ICMP on a firewall if you are traversing networks, so if your network is, say, `10.10.10.0/24` and you are attempting to ping-sweep `20.20.20.0/24`, a firewall may prevent ICMP entirely so you will have no joy there. You will have better luck if you are actually _on_ the network you are trying to sweep. That said, nmap does a little bit more than run a ping on all the hosts here, so this is a little better than a standard ping.
+This will perform an ICMP ECHO (plus some additional similar checks) to all hosts on the 10.20.30.0/24 subnet. It is not uncommon for hosts to block ICMP, so this may not be the definitive way to determine if a host is actually there. On many networks it's also possible to block ICMP on a firewall if you are traversing networks, so if your network is, say, `10.10.10.0/24` and you are attempting to ping-sweep `20.20.20.0/24`, a firewall may prevent ICMP entirely so you will have no joy there. You will have better luck if you are actually _on_ the network you are trying to sweep. That said, nmap does a little bit more than run a ping on all the hosts here, so this is a little better than a standard ping.
 
 > Note for anyone running on a virtual machine, specifically VMWare
 {: .prompt-warning}
@@ -107,13 +106,6 @@ This isn't as reliable because it doesn't send any packets to the target hosts. 
 $ sudo nmap -O 10.20.30.40
 ```
 This performs some fairly low-level inspection to determine the operating system of the target. A bit more detailed than standard TTL differences between Linux and Windows (TTL of packets on Linux start at 64, where Windows starts at 128), also attempts to perform some negotiation with the target to determine TCP Sequence predictability which can be used to fingerprint certain versions of an operating system. Evidently it is also possible to estimate the target's uptime by viewing the TCP timestamp option, but this is only viewable by adding the `-v` verbose flag.
-
-### Don't Ping the Host
-
-```terminal
-$ sudo nmap -Pn 10.20.30.40
-```
-This will skip the first step of determining if the host is actually up. If you don't include this, the first thing nmap will do is its standard "are you alive?" checks to determine if the host is up. If it fails those checks it assumes the host is down and will not continue scanning. However, some hosts will straight-up block ICMP packets and only open the ports it needs to. In that case you would add this `-Pn` flag to disable checks and assume the host is up anyway. It will then attempt to connect to the ports it will typically connect to and determine what is listening.
 
 ### Scan Faster (or slower)
 
@@ -150,12 +142,12 @@ $ sudo nmap -n 10.20.30.40
 ```
 Passing `-n` to a scan will choose NOT to perform DNS resolution. Passing `-R` will always attempt to resolve.
 
-### Skip Host Discovery
+### Skip Host Discovery - Don't Ping the Host
 
 ```terminal
 $ sudo nmap -Pn 10.20.30.40
 ```
-If you know for a fact that the host is online but _isn't_ responding to pings, Pass the `-Pn` flag to it to skip standard host discovery and attempt to scan the standard way.
+If you know for a fact that the host is online but _isn't_ responding to pings, Pass the `-Pn` flag to it to skip standard host discovery and attempt to scan the standard way. This will skip the first step of determining if the host is actually up. If you don't include this, the first thing nmap will do is its standard "are you alive?" checks to determine if the host is up. If it fails those checks it assumes the host is down and will not continue scanning. However, some hosts will straight-up block ICMP packets and only open the ports it needs to. In that case you would add this flag to disable checks and assume the host is up anyway. It will then attempt to connect to the ports it will typically connect to and determine what is listening.
 
 ### Nmap Scan Through Proxy
 
