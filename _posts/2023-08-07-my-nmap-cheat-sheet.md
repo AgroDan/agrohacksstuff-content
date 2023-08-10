@@ -23,7 +23,7 @@ $ sudo nmap -sC -sV -oN portscan -v 10.20.30.40
 ```
 
 
-The above will scan the target (on TCP only) on the default "nmap's most popular 1000 ports". It will attempt to communicate with each open port and obtaining the version of the software listening on it (`-sV`). If it successfully connects to a port and determines the running service, it will attempt to run default scripts against it (`-sC`), which will do some basic enumeration on it. Say if it were to connect to a web server on port `:80`, it will then run simple things like `GET / HTTP/1.1\r\n` and return the title of the page. It will then record all output to a file named `portscan` in the "nmap" format (`-oN portscan`), and finally it will be verbose (`-v`). Running this in verbose will inform you the second it finds an open port, so you can attempt your own enumeration on the port before nmap can finish. This is useful if you are in a rush or something I guess. I should note that Ippsec generally uses `-oA <name of server>` instead of the above, but it's generally not necessary on a challenge on HackTheBox or something. Fairly useful on in-the-wild engagements though I suppose.
+The above will scan the target (on TCP only) on the default "nmap's most popular 1000 ports". It will attempt to communicate with each open port and obtain the version of the software listening on it (`-sV`). If it successfully connects to a port and determines the running service, it will attempt to run default scripts against it (`-sC`), which will do some basic enumeration on it. Say if it were to connect to a web server on port `:80`, it will then run simple things like `GET / HTTP/1.1\r\n` and return the title of the page. It will then record all output to a file named `portscan` in the "nmap" format (`-oN portscan`), and finally it will be verbose (`-v`). Running this in verbose will inform you the second it finds an open port, so you can attempt your own enumeration on the port before nmap can finish. This is useful if you are in a rush or something I guess. I should note that Ippsec generally uses `-oA <name of server>` instead of the above, but it's generally not necessary on a challenge on HackTheBox or something. Fairly useful on in-the-wild engagements though I suppose.
 
 Finally, I want to stress the concept of running nmap as root. The `sudo` command is necessary since nmap utilizes packet capture capabilities when performing scans, which is something only root can do. Sure the nmap binary will still work, but without the ability to perform a SYN scan it will default to a TCP scan, which does not do any packet capturing but rather initiates a TCP connection to each port and attempting to negotiate with it on an application level. This capability restricts nmap's ability to detect (as I have certainly witnessed before), so SYN scans are generally considered the best option, especially according to nmap's documentation.
 
@@ -73,7 +73,7 @@ This will scan the target with "extreme aggression." Also sets retransmissions t
 ```terminal
 $ sudo nmap -sn 10.20.30.0/24
 ```
-This will perform an ICMP ECHO to all hosts on the 10.20.30.0/24 subnet. It is not uncommon for hosts to block ICMP, so this may not be the definitive
+This will perform an ICMP ECHO to all hosts on the 10.20.30.0/24 subnet. It is not uncommon for hosts to block ICMP, so this may not be the definitive way to determine if a host is actually there. On many networks it's also possible to block ICMP on a firewall if you are traversing networks, so if your network is, say, `10.10.10.0/24` and you are attempting to ping-sweep `20.20.20.0/24`, a firewall may prevent ICMP entirely so you will have no joy there. You will have better luck if you are actually _on_ the network you are trying to sweep. That said, nmap does a little bit more than run a ping on all the hosts here, so this is a little better than a standard ping.
 
 > Note for anyone running on a virtual machine, specifically VMWare
 {: .prompt-warning}
@@ -90,14 +90,14 @@ It's been brought to my attention that performing a ping sweep in a very specifi
 - nmap receives **TCP SYN/ACK** reply to **443/TCP SYN** packet
 - nmap receives **TCP RST** reply to **80/TCP ACK** packet
 
-Running nmap from a VMWare machine as stated above, the supplied network can generate a **TCP RST** reply to all of the **80/TCP ACK** packets, which can trick nmap into thinking all hosts are up. Setting the `--unprivileged` flag will run nmap assuming you are not a privileged user with the capability of sniffing the wire, so will resort to checking for port 443 connections _only_. The better answer to this is to run your VM in bridged mode when performing this to achieve more accurate results.
+Running nmap from a VMWare machine as stated above, the supplied network can generate a **TCP RST** reply to all of the **80/TCP ACK** packets, which can trick nmap into thinking all hosts are up. Setting the `--unprivileged` flag will run nmap assuming you are not a privileged user with the capability of sniffing the wire, so will resort to checking for port 443 connections _only_. **The better solution to this is to run your VM in bridged mode when performing this to achieve more accurate results.**
 
 ### Host Discovery: List Scan
 
 ```terminal
 $ sudo nmap -sL 10.20.30.0/24
 ```
-This isn't as reliable because it doesn't send any packets to the target hosts. Just performs nameserver reverse lookups on the IP addresses. Still fairly covert though.
+This isn't as reliable because it doesn't send any packets to the target hosts. Just performs nameserver reverse lookups on the IP addresses. Still fairly covert though as you aren't sending _any_ packets to the individual hosts, just negotiating with a nameserver.
 
 ## Useful Flags
 
@@ -108,14 +108,28 @@ $ sudo nmap -O 10.20.30.40
 ```
 This performs some fairly low-level inspection to determine the operating system of the target. A bit more detailed than standard TTL differences between Linux and Windows (TTL of packets on Linux start at 64, where Windows starts at 128), also attempts to perform some negotiation with the target to determine TCP Sequence predictability which can be used to fingerprint certain versions of an operating system. Evidently it is also possible to estimate the target's uptime by viewing the TCP timestamp option, but this is only viewable by adding the `-v` verbose flag.
 
-### Scan Faster
+### Don't Ping the Host
+
+```terminal
+$ sudo nmap -Pn 10.20.30.40
+```
+This will skip the first step of determining if the host is actually up. If you don't include this, the first thing nmap will do is its standard "are you alive?" checks to determine if the host is up. If it fails those checks it assumes the host is down and will not continue scanning. However, some hosts will straight-up block ICMP packets and only open the ports it needs to. In that case you would add this `-Pn` flag to disable checks and assume the host is up anyway. It will then attempt to connect to the ports it will typically connect to and determine what is listening.
+
+### Scan Faster (or slower)
 
 ```terminal
 $ sudo nmap --min-rate 10000 10.20.30.40
 ```
-Use this one lightly. If you want to just blast packets at the target as fast as possible, set the `--min-rate` value to something high like 10,000. This will send 10,000 packets at the target per second, so doing it this high will increase false positives (or false negatives). Use only if you know the network isn't that congested or otherwise has a fair amount of bandwidth. This is unnecessary unless you're on a time crunch or something.
+Use this one lightly. If you want to just blast packets at the target as fast as possible, set the `--min-rate` value to something high like 10,000. This will send 10,000 packets at the target per second minimum (potentially faster), so doing it this high will increase false positives (or false negatives). Use only if you know the network isn't that congested or otherwise has a fair amount of bandwidth. This is unnecessary unless you're on a time crunch or something. Likewise you can specify `--max-rate 1` to send one packet per second, or `0.1` to send one packet every 10 seconds, etc -- to be low and slow.
 
-### Shorten the Above
+### Better Way to Increase/Decrease Speed
+
+```terminal
+$ sudo nmap -T 0 10.20.30.40
+```
+You can use the `-T` flag and choose a number from 0-5 to set a timing template. This is equivalent to setting about 10 different flags to specify speeds of round-trip times, parallelism, scan delays and retries (plus more). A timing template of 0 will be "paranoid", which will be extremely low and slow, flying under the radar as much as possible at the expense of time, and a template of 5 will be extremely fast and extremely aggressive, _potentially_ causing problems on the target host. It should be cautioned not to use a timing template of 5 unless you're fine with the potential end result being a complete denial of service, but between you me and the lamppost, if your host falls over after a fast nmap scan then it is my expert opinion that it has no earthly business being available on any network to begin with. For reference, a timing template of 3 is the default scan template.
+
+### Shorten the Ippsec Special
 
 ```terminal
 $ sudo nmap -A 10.20.30.40
