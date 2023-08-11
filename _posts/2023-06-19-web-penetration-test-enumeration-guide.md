@@ -45,8 +45,31 @@ Finally, you can scan all UDP ports, but this is generally when I hit a brick wa
 ```sh
 sudo nmap -sU -p- -oN allports-udp <target ip>
 ```
-
 Naturally this scan takes _forever_.
+
+> _Most_ of the above can be made easier with this handy script.
+{: .prompt-info}
+
+You can add this to your `.zshrc` or `.bashrc` file to make things a little easier:
+
+```sh
+scan() {
+	SCANDIR="${PWD}/nmap_scans"
+	if [ -z $1 ];
+	then
+		read "TARGET?Enter a target: "
+	else
+		TARGET=$1
+	fi
+
+	echo "Scanning ${TARGET}..."
+	mkdir -p $SCANDIR
+	sudo nmap -sS -sV -sC -oN $SCANDIR/initial-scan -v $TARGET
+	sudo nmap -sS -p- -oN $SCANDIR/allports -v0 $TARGET &disown
+	sudo nmap -sU -oN $SCANDIR/udpports -v0 $TARGET &disown
+}
+```
+Now all you have to do is type `scan` and it will prompt you for a target, running 3 different scans and writing the output to a new directory `./nmap_scans`. Just a handy quality of life tip.
 
 ## Website Review
 
