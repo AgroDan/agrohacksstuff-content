@@ -75,7 +75,7 @@ out = subprocess.run(cmd, capture_output=True)
 
 print(out.stdout.decode("utf-8"))
 ```
-> Note, adding `capture_output=True` will suppress output from being displayed the instan that `subprocess.run()` is executed. Instead, you can access STDOUT and STDERR from the new object created in the `out` variable.
+> Note, adding `capture_output=True` will suppress output from being displayed the instant that `subprocess.run()` is executed. Instead, you can access STDOUT and STDERR from the new object created in the `out` variable.
 {: .prompt-info}
 
 ### shell=True
