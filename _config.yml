@@ -20,7 +20,7 @@ timezone: America/New_York
 
 title: Agr0 Hacks Stuff # the main title
 
-tagline: How does one protect without learning to attack? # it will display as the sub-title
+tagline: Defense by Offense # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A digital notebook featuring tips, discussions, cheat sheets and general things I've learned in my infosec journey.
