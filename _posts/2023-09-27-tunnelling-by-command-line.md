@@ -25,7 +25,7 @@ Pros
 : OpenSSH is _most likely_ installed already.
 : No need to upload additional binaries. Live off the land.
 : Automatically encrypted, though to be fair most tunnels are.
-: If you are connecting via SSH already, you can set up a tunnel already without a new connection (or new binaries), though you do have to make sure a configuration open is enabled beforehand.
+: If you are connecting via SSH already, you can set up a tunnel already without a new connection (or new binaries), though you do have to make sure the SSH sub-shell is enabled beforehand.
 
 Cons
 : Requires that the OpenSSH server is not only running and reachable, but you have a means of successfully logging into it (via ssh key or known username/password). Unless of course you run an SSH server on your local machine (more on that later).
