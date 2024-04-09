@@ -305,6 +305,95 @@ p64(my_bytes)
 
 There is also `p8()` and `p16()` for packing 8 and 16 bits, respectively. Though in this instance it would error out because this bytestring is 32 bits long.
 
+## Manipulate Bits with Math
+
+I can't end this without mentioning bitwise arithmetic. Utilizing standard bitwise math can help you modify individual bits within a byte without having to do any weird list breakouts and re-assembling. Sometimes you just want to flip a single bit in a byte, and the easiest way to do that is using some fancy logical operators. I talk about some of this in my [PRNG and why you should tread lightly]({% post_url 2021-03-21-pseudo-random-number-generators-and-why-you-should-tread-lightly %}) page, but I'll just mention some of the easier methods used for bit flipping and such.
+
+And yeah, if you already know about logical arithmetic then you can probably skip this section.
+
+### AND'ing Will Copy or Zero
+
+You can use the AND (&) operator to either copy a portion of a byte, or completely zero out a byte:
+
+```python
+myNumber = 0b00110011
+
+# if I only want to copy the left-most 4 digits but return
+# zeros for the right-most, I can AND it by 11110000:
+
+leftMost = 0b11110000
+
+copiedLeft = myNumber & leftMost
+# copiedLeft = 0b00110000
+```
+
+Or you can completely zero out all or a portion of a byte by AND'ing it with all zeroes.
+
+```python
+myNumber = 0b00110011
+
+FlipToZero = 0b00000000
+# aka FlipToZero = 0b0
+
+myNumber &= FlipToZero
+# Remember that the &= is equivalent to saying:
+# myNumber = myNumber & FlipToZero
+# so myNumber = 0b00000000
+```
+
+### OR'ing will Flip to All Ones or Copy
+
+You can use a logical OR to flip something to all ones, or copy similar to the AND function.
+
+```python
+myNumber = 0b00110011
+
+# to flip the right-most portion of this byte to all 1's,
+# you can OR this number with the following
+FlipRightToOnes = 0b00001111
+
+myNumber |= FlipRightToOnes
+# Now myNumber = 0b00111111
+```
+
+### XOR'ing a Number by Itself Will Return Zero
+
+AKA eXclusive OR. This is generally useful in things like Assembly when you need to zero out a register or something, but hey it works in python in a pinch.
+
+```python
+myNumber = 0b00110011
+
+myNumber ^= myNumber
+# Now myNumber = 0b00000000
+```
+
+And of course, XOR is a fundamental aspect of cryptography, but still it's worth noting that it can flip a value straight to zero.
+
+### Shifting Left and Right
+
+Bit Shifting will move all bits left, padding the right side with zeroes, and shifting right will move all bits to the right. Simple as that.
+
+```python
+myNumber = 0b00110011
+
+# Shift everything to the left by 2
+myNumber <<= 2
+# myNumber = 0b11001100
+
+# Shift it back to the right by 2 again
+myNumber >>= 2
+# myNumber = 0b00110011
+
+# So for fun, we can now move everything to the left
+# and fill in with ones using OR.
+
+myNumber <<= 2
+# myNumber = 0b11001100
+
+myNumber |= 0b11
+# myNumber = 0b11001111
+```
+
 ## Conclusion
 
 Hopefully I've managed to shed some light on the mystery of working with bytes in Python. I'll add to this document as much as I can if I find out other neat tricks!
