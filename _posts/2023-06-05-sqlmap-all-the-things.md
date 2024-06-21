@@ -75,7 +75,7 @@ if __name__ == "__main__":
     app.run(host="127.0.0.1")
 ```
 {% endraw %}
-Note the use of the double curl-braces, this is to escape the literal curly braces and add the python format-string variable.
+Note the use of the double curly-braces, this is to escape the literal curly braces and add the python format-string variable.
 
 Now if I execute this code, I can test it with:
 
