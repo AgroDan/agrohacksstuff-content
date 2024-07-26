@@ -259,13 +259,13 @@ return y & 0xffffffff
 
 To clarify:
 
-1) set the variable `y` to `MT[index]`
-2) `y` is then shifted right 11 bits, AND'd with `0xffffffff`, then XOR'd with `y`
-3) `y` is then shifted left 7 bits, AND'd with `0x9d2c5680`, then XOR'd with `y`
-4) `y` is then shifted left 15 bits, AND'd with `0xefc60000`, then XOR'd with `y`
-5) `y` is then shifted right 18 bits, and XOR'd with `y`
-6) index is increased by 1
-7) The tempered value of `y` is then AND'd by `0xffffffff`, which simply shortens it to 32 bits long (or 10 digits, thereabouts)
+1. set the variable `y` to `MT[index]`
+2. `y` is then shifted right 11 bits, AND'd with `0xffffffff`, then XOR'd with `y`
+3. `y` is then shifted left 7 bits, AND'd with `0x9d2c5680`, then XOR'd with `y`
+4. `y` is then shifted left 15 bits, AND'd with `0xefc60000`, then XOR'd with `y`
+5. `y` is then shifted right 18 bits, and XOR'd with `y`
+6. index is increased by 1
+7. The tempered value of `y` is then AND'd by `0xffffffff`, which simply shortens it to 32 bits long (or 10 digits, thereabouts)
 
 Yikes. Well, there's a lot of steps. And guess what! They are actually reversible! It's not easy, but they are reversible! And in theory, if you reverse these in the reverse order it goes through, then you could technically be able to determine the number it pulled from the state array and *reconstruct the same state array*. And if you do that, you can predict every single number it generates.
 
