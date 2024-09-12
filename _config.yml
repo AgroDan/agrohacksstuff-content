@@ -44,13 +44,21 @@ social:
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/danfedele
 
+# plugins:
+#   - jekyll-analytics
+
+# jekyll_analytics:
+#   GoogleAnalytics:
+#     id: G-8TBQ84CC7Q
+#     anonymizeIp: false
+
 google_site_verification: # fill in to your verification string
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
 google_analytics:
-  id: # fill in your Google Analytics ID
+  id: G-8TBQ84CC7Q # fill in your Google Analytics ID
 
 # Prefer color scheme setting.
 #
