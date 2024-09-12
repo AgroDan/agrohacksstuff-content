@@ -625,6 +625,28 @@ payload += bytes(frame)
 p.sendline(payload)
 ```
 
+## ASLR Toggle Script
+
+This isn't related to pwntools at all, but sometimes I want to have a script that disables and re-enables ASLR on a whim. So I made this.
+
+```bash
+#!/bin/bash
+
+ASLR="/proc/sys/kernel/randomize_va_space"
+
+if [[ $(cat $ASLR) == 0 ]];
+then
+    echo "ASLR is turned off. Turning on now..."
+    echo 2 | sudo tee $ASLR
+    echo "done."
+else
+    echo "ASLR is turned on. Turning off now..."
+    echo 0 | sudo tee $ASLR
+    echo "done."
+fi
+```
+Just handy to have in your back pocket.
+
 ## Conclusion
 
 This is about all I can muster. Just like every other article and cheat sheet I've ever written, I hope to update this as I learn new things.
