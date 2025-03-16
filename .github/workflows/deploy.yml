@@ -17,6 +17,20 @@ jobs:
       # Checkout repo
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      # Build the site
+      - name: Setup Ruby
+        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
+        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        with:
+          ruby-version: '3.1' # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+      
+      - name: Build the site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
 
       # Log in to Docker Hub
       - name: Log in to Docker Hub
@@ -30,7 +44,6 @@ jobs:
         run: |
           IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io"
           TAG="$(date +%Y%m%d%H%M%S)"
-          jekyll build
           docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:$TAG
           docker push $IMAGE_NAME:latest
