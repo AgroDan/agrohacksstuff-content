@@ -24,6 +24,7 @@ jobs:
       # Build and push Docker image
       - name: Build and Push Docker Image
         run: |
+          env
           IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io"
           TAG="$(date +%Y%m%d%H%M%S)"
           jekyll build
