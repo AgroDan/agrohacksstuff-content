@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Runs on pushes to main branch
 
+env:
+  GEM_HOME: "$HOME/gems"
+  PATH: "$PATH:$GEM_HOME/bin"
+
 jobs:
   build-and-deploy:
     runs-on: self-hosted
@@ -24,7 +28,6 @@ jobs:
       # Build and push Docker image
       - name: Build and Push Docker Image
         run: |
-          env
           IMAGE_NAME="${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io"
           TAG="$(date +%Y%m%d%H%M%S)"
           jekyll build
