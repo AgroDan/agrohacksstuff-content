@@ -56,6 +56,6 @@ jobs:
 
       - name: Update Kubernetes Deployment
         run: |
-          kubectl set image deployment/agrohacksstuff-deployment agrohacksstuff.io=${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io:$IMAGE_TAG -n default
+          kubectl set image deployment/agrohacksstuff-deployment ${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io=${{ secrets.DOCKERHUB_USERNAME }}/agrohacksstuff.io:$IMAGE_TAG -n default
           kubectl rollout status deployment/agrohacksstuff-deployment -n default
 
