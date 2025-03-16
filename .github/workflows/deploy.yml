@@ -17,12 +17,17 @@ jobs:
       # Build the site
       - name: Setup Ruby and Jekyll
         run: |
+          export GEM_HOME="$HOME/gems"
+          export PATH="$GEM_HOME/bin:$PATH"
           ruby -v
-          gem install bundler
-          bundle install
+          gem install bundler --user-install
+          gem install jekyll --user-install
+          bundle install --path "$GEM_HOME"
       
       - name: Build the site
         run: |
+          export GEM_HOME="$HOME/gems"
+          export PATH="$GEM_HOME/bin:$PATH"
           bundle exec jekyll build
         
 
