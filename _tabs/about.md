@@ -64,4 +64,4 @@ You can find me on LinkedIn, Twitter, Github, etc. It's best to contact me throu
 
 ## CI/CD?
 
-This is made with a CI/CD Pipeline, and this proves it! Hello world!
+This is made with a CI/CD Pipeline, and this proves it! Hello world! Hi James!
