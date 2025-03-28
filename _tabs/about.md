@@ -61,3 +61,5 @@ No one has ever actually asked this of me, but just in case the answer is no. Th
 ## How can I get in touch with you?
 
 You can find me on LinkedIn, Twitter, Github, etc. It's best to contact me through one of those platforms, but you can always shoot me an email too.
+
+Hi Dan!
