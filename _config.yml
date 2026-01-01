@@ -8,86 +8,41 @@ theme: jekyll-theme-chirpy
 # otherwise, the layout language will use the default value of 'en'.
 lang: en
 
-<<<<<<< HEAD
-# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: America/New_York
-=======
 # Change to your timezone › https://zones.arilyn.cc
-timezone:
->>>>>>> v7.4.1
+timezone: America/New_York
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-<<<<<<< HEAD
 title: Agr0 Hacks Stuff # the main title
 
-tagline: Defense by Offense # it will display as the sub-title
+tagline: Defense by Offense # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A digital notebook featuring tips, discussions, cheat sheets and general things I've learned in my infosec journey.
 
-# fill in the protocol & hostname for your site.
-# e.g. 'https://username.github.io', note that it does not end with a '/'.
+# Fill in the protocol & hostname for your site.
+# E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://agrohacksstuff.io"
 
 github:
-  username: AgroDan # change to your github username
+  username: AgroDan # change to your GitHub username
 
 twitter:
-  username: agr0dan # change to your twitter username
-=======
-title: Chirpy # the main title
-
-tagline: A text-focused Jekyll theme # it will display as the subtitle
-
-description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
-
-# Fill in the protocol & hostname for your site.
-# E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: ""
-
-github:
-  username: github_username # change to your GitHub username
-
-twitter:
-  username: twitter_username # change to your Twitter username
->>>>>>> v7.4.1
+  username: agr0dan # change to your Twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-<<<<<<< HEAD
   name: Dan Fedele
   email: 9vmxhgqp6@relay.firefox.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/agr0dan # change to your twitter homepage
-    - https://github.com/AgroDan # change to your github homepage
+    - https://twitter.com/agr0dan # change to your Twitter homepage
+    - https://github.com/AgroDan # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/danfedele
-
-# plugins:
-#   - jekyll-analytics
-
-# jekyll_analytics:
-#   GoogleAnalytics:
-#     id: G-8TBQ84CC7Q
-#     anonymizeIp: false
-
-google_site_verification: # fill in to your verification string
-=======
-  name: your_full_name
-  email: example@domain.com # change to your email address
-  links:
-    # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
-    - https://github.com/username # change to your GitHub homepage
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
 
 # Site Verification Settings
 webmaster_verifications:
@@ -97,19 +52,14 @@ webmaster_verifications:
   yandex: # fill in your Yandex verification code
   baidu: # fill in your Baidu verification code
   facebook: # fill in your Facebook verification code
->>>>>>> v7.4.1
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
-<<<<<<< HEAD
-google_analytics:
-  id: G-8TBQ84CC7Q # fill in your Google Analytics ID
-=======
 # Web Analytics Settings
 analytics:
   google:
-    id: # fill in your Google Analytics ID
+    id: G-8TBQ84CC7Q# fill in your Google Analytics ID
   goatcounter:
     id: # fill in your GoatCounter ID
   umami:
@@ -126,7 +76,6 @@ analytics:
 # Page views settings
 pageviews:
   provider: # now only supports 'goatcounter'
->>>>>>> v7.4.1
 
 # Prefer color scheme setting.
 #
@@ -136,22 +85,6 @@ pageviews:
 #
 # Available options:
 #
-<<<<<<< HEAD
-#     light  - Use the light color scheme
-#     dark   - Use the dark color scheme
-#
-theme_mode:  # [light|dark]
-
-# The CDN endpoint for images.
-# Notice that once it is assigned, the CDN url
-# will be added to all image (site avatar & posts' images) paths starting with '/'
-#
-# e.g. 'https://cdn.com'
-img_cdn:
-
-# the avatar on sidebar, support local or CORS resources
-avatar: /assets/img/avatar/whoami.png
-=======
 #     light — Use the light color scheme
 #     dark — Use the dark color scheme
 #
@@ -165,25 +98,19 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/img/avatar/whoami.png
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
 social_preview_image: # string, local or CORS resources
->>>>>>> v7.4.1
 
 # boolean type, the global switch for TOC in posts.
 toc: true
 
 comments:
-<<<<<<< HEAD
-  active: # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
-  # The active options are as follows:
-=======
   # Global switch for the post-comment system. Keeping it empty means disabled.
   provider: # [disqus | utterances | giscus]
   # The provider options are as follows:
->>>>>>> v7.4.1
   disqus:
     shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
   # utterances settings › https://utteranc.es/
@@ -197,10 +124,7 @@ comments:
     category:
     category_id:
     mapping: # optional, default to 'pathname'
-<<<<<<< HEAD
-=======
     strict: # optional, default to '0'
->>>>>>> v7.4.1
     input_position: # optional, default to 'bottom'
     lang: # optional, default to the value of `site.lang`
     reactions_enabled: # optional, default to the value of `1`
@@ -211,12 +135,6 @@ assets:
     enabled: # boolean, keep empty means false
     # specify the Jekyll environment, empty means both
     # only works if `assets.self_host.enabled` is 'true'
-<<<<<<< HEAD
-    env: # [development|production]
-
-pwa:
-  enabled: true # the option for PWA feature
-=======
     env: # [development | production]
 
 pwa:
@@ -228,7 +146,6 @@ pwa:
     # shares the same domain name as the current website.
     deny_paths:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
->>>>>>> v7.4.1
 
 paginate: 10
 
@@ -236,13 +153,9 @@ paginate: 10
 baseurl: ""
 
 # ------------ The following options are not recommended to be modified ------------------
-<<<<<<< HEAD
-kramdown:
-=======
 
 kramdown:
   footnote_backlink: "&#8617;&#xfe0e;"
->>>>>>> v7.4.1
   syntax_highlighter: rouge
   syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
     css_class: highlight
@@ -279,17 +192,6 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-<<<<<<< HEAD
-  - scope:
-      path: assets/img/favicons
-    values:
-      swcache: true
-  - scope:
-      path: assets/js/dist
-    values:
-      swcache: true
-=======
->>>>>>> v7.4.1
 
 sass:
   style: compressed
@@ -310,14 +212,9 @@ exclude:
   - tools
   - README.md
   - LICENSE
-<<<<<<< HEAD
-  - rollup.config.js
-  - package*.json
-=======
   - purgecss.js
   - "*.config.js"
   - "package*.json"
->>>>>>> v7.4.1
 
 jekyll-archives:
   enabled: [categories, tags]

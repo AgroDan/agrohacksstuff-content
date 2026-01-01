@@ -1,14 +1,10 @@
 ---
-<<<<<<< HEAD
-title: 'About Me'
-=======
 # the default layout is 'page'
->>>>>>> v7.4.1
+title: 'About Me'
 icon: fas fa-info-circle
 order: 4
 ---
 
-<<<<<<< HEAD
 ## My Name is Dan
 
 USA. Working in Information Security. White hat. Gamer. Dad. Views are my own. Though feel free to use my notes. I'm not going to pretend to have all the answers, but I took down a lot of notes and I feel like I should preserve them somehow.
@@ -66,14 +62,3 @@ No one has ever actually asked this of me, but just in case the answer is no. Th
 ## How can I get in touch with you?
 
 You can find me on LinkedIn, Twitter, Github, etc. It's best to contact me through one of those platforms, but you can always shoot me an email too.
-<<<<<<< HEAD
-
-## CI/CD?
-
-This is made with a CI/CD Pipeline, and this proves it!
-=======
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
->>>>>>> v7.4.1
-=======
->>>>>>> dacfbb9f851a98ac553b77125b5d83c569eefda6
