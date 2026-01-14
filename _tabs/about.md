@@ -25,11 +25,15 @@ I have an immense collection of OneNote documents and Obsidian notes that I've c
 
 ## What is your preferred OS?
 
-In my profession I've always found it better to remain OS-agnostic. I game on Windows, I code in Arch BTW, I pentest on Kali, and sometimes I even use MacOS for things. Y'know, as long as someone else is paying for it. Use the right tool for the job.
+In my profession I've always found it better to remain OS-agnostic. I game on Windows, I code and admin in Arch BTW, I pentest on Kali, and sometimes I even use MacOS for things. Y'know, as long as someone else is paying for it. Use the right tool for the job.
 
 ## Where did you get your training?
 
 I got my start in IT as a ColdFusion web developer once upon a time. I eventually became a system administrator for Unix/Linux infrastructure. After that I transitioned to Cyber Security, and with a background in learning how to build things, it was a pretty smooth transition to learning how to exploit that architecture. Since becoming a full time Information Security Specialist, I have obtained a fair amount of [SANS](https://www.sans.org/) training, as well as a large amount of self-training. The sheer amount of help and informational tools available to people who just want to get into the field these days is staggering. So much more than 10 or 15 years ago, and I can attest to that! All it takes is a willingness to learn.
+
+## Do you use any AI to produce articles on this site?
+
+I figured in this age of artificial intelligence that this should be stated up front. I never use AI to write any article on my site. I _do_ use AI for some of the busywork things, like creating a contrived example. Like, "Hey AI, give me an example of XML using arbitrary data about cats" or something. I've always had a tendency of using the m-dash long before I even knew that it was called an m-dash. Now I'm trying to get out of the habit of doing that with the fear that someone would accuse me of just copy-pasting some AI slop. I really hate AI slop but it's a byproduct of the era. While most people can use AI as a tool as it should be used, some people unfortunately just forward entire emails into an LLM and just copy-paste whatever it spits out as the email reply. It's incredibly obvious to those that know what to look for. Don't be that person. Let's all try to be as human to each other as possible. AI is a tool and we should use it appropriately, and never as a replacement for our own human creativity.
 
 ### Some Links
 
@@ -37,7 +41,7 @@ That said, when it comes to places to learn things online, my biggest recommenda
 
 [pwn.college](https://pwn.college/) is a great resource if binary exploitation is your thing. It really offers a great way of learning from the ground up. Some of these challenges are incredibly eye-opening, you'll learn how to do things with the standard linux libraries you never knew possible! And it's free!
 
-[Advent of Code](https://adventofcode.com/) is a yearly set of coding challenges that they release (not surprisingly) around December. It's not information security based, but if you're a developer of any sort, or _especially_ if you are trying to learn a new language, I can't recommend this resource enough. I honed my skills with Go in 2022!
+[Advent of Code](https://adventofcode.com/) is a yearly set of coding challenges that they release (not surprisingly) around December. It's not information security based, but if you're a developer of any sort, or _especially_ if you are trying to learn a new language, I can't recommend this resource enough. I continue to hone my skills with Go since 2022!
 
 If you've spent any time messing with HTB, you have most likely heard of [Ippsec](https://ippsec.rocks/?#), a fantastic sherpa through the older retired boxes. His youtube videos are extremely useful in explaining how to tailor attacks, what to look for, and how to approach different scenarios.
 
@@ -47,18 +51,10 @@ And finally, I can't recommend [John Hammond](https://johnhammond.org/) enough. 
 
 ## Do you have any advice for someone just starting out?
 
-I always give the same advice to anyone that asks this, and it's to start up your own personal lab. I tend to use VMWare to do it virtually, but when I first started I just snagged up old PCs that people were throwing away anyway and tried out different Linux/Unix operating systems. From there I started on self-made projects: run a website, host a wiki that you can store your recipes on, run a DHCP and DNS server, or go for broke and just make stuff up to add to your network. A long time ago I wrote [a little script](https://github.com/AgroDan/sauron) that just alerted me whenever a new device joined my wireless network. The point is, the more you create, the more you learn about the service. Knowing how things work is the key to understanding how they can be exploited.
+I always give the same advice to anyone that asks this, and it's to start up your own personal lab. I tend to use VMWare to do it virtually, but when I first started I just snagged up old PCs that people were throwing away anyway and tried out different Linux/Unix operating systems. From there I started on self-made projects: run a website, host a wiki that you can store your recipes on, run a DHCP and DNS server, or go for broke and just make stuff up to add to your network. A long time ago I wrote [a little script](https://github.com/AgroDan/sauron) that just alerted me whenever a new device joined my wireless network. The point is, the more you create, the more you learn about the service. Knowing how things work is the key to understanding how they can be exploited, and setting up a homelab to do it is one of the most rewarding things you can do. There are plenty of cheap low-power PCs that need a home, don't let them get thrown into a landfill with all the other E-waste!
 
 Additionally, I tend to learn best while doing. A lot of courses on Udemy and Pluralsight can help you learn the fundamentals of things, but if you're anything like me you'll learn best getting your hands dirty actually performing the exploitation. For things like that I highly suggest using the tools that are available to you, and in some cases completely free as well. CTFs are awesome to hone your skills, but by-and-large I find that CTFs are mostly just for fun and barely ever based on true-to-life scenarios of an actual pentester, with a few choice exceptions. For that reason I suggest things like HackTheBox, TryHackMe, and for the binhackers, pwn.college is an incredible resource.
 
-## Can you join my CTF group?
-
-Nah. I tried it a couple of times and personally I just don't have the time to do it all that much. I *love* CTF challenges, but if I have to do it on a schedule then that's just not going to happen. Being a dad that also works full time means I have very specific times where I get to do fun non-dad things, and usually CTF challenges are not conducive to my schedule. So really I would only drag your team down. Sorry!
-
-## Can you hack my ex's Instagram account?
-
-No one has ever actually asked this of me, but just in case the answer is no. That is illegal. Make no mistake, hacking something you've not been given explicit permission to hack by the owner is a crime. I do not advocate anyone use their powers for evil.
-
 ## How can I get in touch with you?
 
-You can find me on LinkedIn, Twitter, Github, etc. It's best to contact me through one of those platforms, but you can always shoot me an email too.
+Probably the best way to contact me is via LinkedIn. I have an email associated with this site and it works, but I tend to get a lot of scammy requests so most of them get ignored. I'm happy to visit cyber security clubs to see what you're all about and can even give presentations or talks!
