@@ -3,7 +3,7 @@ layout: post
 title: Kubernetes for a Home Lab
 date: 2026-01-10 10:50 -0500
 categories: [Kubernetes]
-tags: [kubernetes, home lab, talos]
+tags: [kubernetes, home lab, talos, k8s]
 mermaid: true
 ---
 
