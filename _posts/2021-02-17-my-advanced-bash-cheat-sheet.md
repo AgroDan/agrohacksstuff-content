@@ -119,12 +119,13 @@ This is fine...except that you'll be prompted to enter a password 3 times. Nobod
 ```bash
 #!/bin/bash
 
-read -s -p "Enter password: " >vault_pass
+read -s -p "Enter password: " vault_password
+echo $vault_password > vault_pass_file
 
-/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass some-playbook.yml
-/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass some-other-playbook.yml
-/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass yet-another-playbook.yml
-rm -f vault_pass
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass_file some-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass_file some-other-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass_file yet-another-playbook.yml
+rm -f vault_pass_file
 ```
 
 This would work, sure. But why even bother writing to disk when you can just create an ephemeral file descriptor?
