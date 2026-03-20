@@ -100,6 +100,47 @@ exec 3>&-
 
 This will close FD3.
 
+### Read Command Output as a File
+
+Always a fun party trick. Sometimes you'll have a command that accepts a file as input. The "easiest" way to go about doing this is to just create the file and read it in as necessary. The first thing that comes to mind is an ansible script playbook that involves using the vault. Now the _proper_ way of going about solving this issue is to create a playbook with separate ansible roles, but this is a contrived example here so just bear with me.
+
+Say for instance you have two ansible playbooks you want to run that are very specific. Both of them need access to a vault file that's encrypted. As of now, there are two ways to pass this info to `ansible-playbook`. You can add `--ask-vault-pass` as an argument and ansible will create a prompt for you. The second is you could add it to a file and point to it with the `--vault-pass-file` argument. This is typically fine for most cases, but say you have a bunch of plays you want to run from a bash script (again, forget how to properly do it in ansible). You'd create a script something like this:
+
+```bash
+#!/bin/bash
+
+/usr/bin/ansible-playbook -i inventory --ask-vault-pass some-playbook.yml
+/usr/bin/ansible-playbook -i inventory --ask-vault-pass some-other-playbook.yml
+/usr/bin/ansible-playbook -i inventory --ask-vault-pass yet-another-playbook.yml
+```
+
+This is fine...except that you'll be prompted to enter a password 3 times. Nobody has time for that. My first instinct is to prompt for a password from the bash script, then pass that password to each call to `ansible-playbook`. Well forget the security issue of running a command with a password as an argument (anyone else logged in can potentially see this password by running `ps aux`), but ansible doesn't even have that ability, most likely for that very security issue. Now I could just create a temporary file and delete it afterwards...
+
+```bash
+#!/bin/bash
+
+read -s -p "Enter password: " >vault_pass
+
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass some-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass some-other-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file vault_pass yet-another-playbook.yml
+rm -f vault_pass
+```
+
+This would work, sure. But why even bother writing to disk when you can just create an ephemeral file descriptor?
+
+```bash
+#!/bin/bash
+
+read -s -p "Enter password: " vault_pass
+
+/usr/bin/ansible-playbook -i inventory --vault-pass-file <(echo $vault_pass) some-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file <(echo $vault_pass) some-other-playbook.yml
+/usr/bin/ansible-playbook -i inventory --vault-pass-file <(echo $vault_pass) yet-another-playbook.yml
+```
+
+The `<(some command)` statement will run a command in a subshell and return the result as a file descriptor.
+
 Now with all that out of the way, we can get to the good stuff.
 
 ---
